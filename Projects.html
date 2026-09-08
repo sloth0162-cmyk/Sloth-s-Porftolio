@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Sloth</title>
+    <meta name="description" content="Selected projects by Sloth — automation, AI, real estate, and construction web development." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,0..144,450&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ink: '#0F1512',
+                        panel: '#161F1A',
+                        line: '#26332B',
+                        moss: '#8FA888',
+                        mossbright: '#C3D6B4',
+                        ivory: '#F2EFE6',
+                        muted: '#93A092',
+                        clay: '#C98A5E'
+                    },
+                    fontFamily: {
+                        display: ['"Fraunces"', 'serif'],
+                        body: ['"Inter"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+
+        body {
+            background-color: #0F1512;
+            color: #F2EFE6;
+        }
+
+        .site-nav {
+            padding-top: 1.75rem;
+            padding-bottom: 1.75rem;
+            transition:
+                padding 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+            background-color: rgba(15, 21, 18, 0);
+            border-bottom: 1px solid transparent;
+        }
+
+        .site-nav.scrolled {
+            padding-top: 0.85rem;
+            padding-bottom: 0.85rem;
+            background-color: rgba(15, 21, 18, 0.86);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #26332B;
+            box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .brand-mark {
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .site-nav.scrolled .brand-mark {
+            transform: scale(0.9);
+        }
+
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            width: 0%;
+            background: linear-gradient(90deg, #8FA888, #C3D6B4);
+            z-index: 60;
+            transition: width 0.15s linear;
+        }
+
+        .hero-in,
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .hero-in {
+            animation: heroIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .hero-in-delay-1 {
+            animation: heroIn 0.9s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .hero-in-delay-2 {
+            animation: heroIn 0.9s 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition:
+                opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes heroIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .draw-underline {
+            position: relative;
+            white-space: nowrap;
+        }
+
+        .draw-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0.06em;
+            height: 0.09em;
+            background: #8FA888;
+            transform-origin: left;
+            animation: draw 1.2s 0.35s cubic-bezier(0.65, 0, 0.35, 1) both;
+        }
+
+        @keyframes draw {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .project-block {
+            scroll-margin-top: 110px;
+        }
+
+        .project-media {
+            width: 100%;
+            background: linear-gradient(135deg, #1B2620, #10160F);
+            overflow: hidden;
+            position: relative;
+            border-radius: 1.25rem;
+        }
+
+        .project-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            transition:
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.65s ease;
+            filter: grayscale(25%) brightness(0.9);
+        }
+
+        .project-block:hover .project-media img {
+            transform: scale(1.015);
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .project-card {
+            transition:
+                border-color 0.35s ease,
+                transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                background-color 0.35s ease;
+        }
+
+        .project-card:hover {
+            border-color: #8FA888;
+            transform: translateY(-3px);
+            background-color: #19231D;
+        }
+
+        .jump-link,
+        .view-link,
+        .btn-primary,
+        .tag-pill {
+            transition:
+                transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                color 0.3s ease,
+                border-color 0.3s ease,
+                background-color 0.3s ease,
+                box-shadow 0.3s ease,
+                gap 0.3s ease;
+        }
+
+        .jump-link:hover {
+            color: #C3D6B4;
+            transform: translateX(4px);
+        }
+
+        .view-link:hover {
+            gap: 0.6rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -10px rgba(143, 168, 136, 0.45);
+        }
+
+        .tag-pill:hover {
+            border-color: #8FA888;
+            color: #C3D6B4;
+            transform: translateY(-2px);
+        }
+
+        .feature-row {
+            border-top: 1px solid #26332B;
+        }
+
+        .feature-row:last-child {
+            border-bottom: 1px solid #26332B;
+        }
+
+        ::selection {
+            background: #8FA888;
+            color: #0F1512;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-body antialiased">
+
+    <div id="progress"></div>
+
+    <!-- ============ NAV ============ -->
+    <header class="site-nav fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 md:px-10 flex items-center justify-between">
+            <a href="index.html" class="brand-mark flex items-center gap-3 group">
+                <img
+                    src="images/profile.jpg"
+                    alt="Sloth"
+                    class="w-9 h-9 rounded-full object-cover border border-line"
+                    onerror="this.style.display='none'"
+                />
+                <span class="font-display text-lg tracking-tight text-ivory">
+                    Sloth<span class="text-moss">.</span>
+                </span>
+            </a>
+
+            <nav>
+                <ul class="flex items-center gap-4 sm:gap-8 font-body text-sm text-muted">
+                    <li>
+                        <a href="index.html#home" class="hover:text-ivory transition-colors">Home</a>
+                    </li>
+                    <li>
+                        <a href="#projects" class="text-ivory transition-colors">Projects</a>
+                    </li>
+                    <li>
+                        <a href="connect.html" class="hidden sm:inline-block border border-line text-ivory px-4 py-2 rounded-full hover:border-moss hover:text-mossbright transition-colors">
+                            Connect
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ============ HERO ============ -->
+        <section id="projects" class="max-w-6xl mx-auto px-6 md:px-10 pt-40 md:pt-48 pb-20 md:pb-24">
+            <p class="hero-in font-mono text-xs tracking-[0.25em] uppercase text-moss mb-6">
+                Selected work
+            </p>
+
+            <h1 class="hero-in-delay-1 font-display font-normal text-4xl sm:text-5xl md:text-6xl leading-[1.12] text-ivory max-w-4xl">
+                Things I've actually <span class="draw-underline italic text-mossbright">shipped.</span>
+            </h1>
+
+            <p class="hero-in-delay-2 mt-8 text-muted text-base md:text-lg max-w-2xl leading-relaxed">
+                A closer look at the applications I've built — what they do, how they work,
+                and the problems they were meant to solve.
+            </p>
+
+            <div class="hero-in-delay-2 mt-10 flex flex-wrap gap-x-6 gap-y-3 font-mono text-xs text-muted">
+                <a href="#newzz" class="jump-link hover:text-mossbright">01 / Project Newzz →</a>
+                <a href="#ak-developer" class="jump-link hover:text-mossbright">02 / AK Developer →</a>
+                <a href="#abiraj" class="jump-link hover:text-mossbright">03 / Abiraj Construction →</a>
+            </div>
+        </section>
+
+        <!-- ============ PROJECT 1 / NEWZZ ============ -->
+        <section id="newzz" class="project-block border-t border-line">
+            <div class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
+
+                <div class="reveal grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-start">
+                    <div>
+                        <p class="font-mono text-xs tracking-[0.25em] uppercase text-moss mb-4">
+                            01 / Automation + AI
+                        </p>
+
+                        <h2 class="font-display text-4xl md:text-5xl text-ivory leading-tight">
+                            Project Newzz
+                        </h2>
+
+                        <p class="text-muted text-lg mt-5 leading-relaxed">
+                            An end-to-end automated news platform built around a pipeline that takes
+                            raw articles and turns them into structured, readable news content with AI-generated imagery.
+                        </p>
+
+                        <div class="mt-8 flex flex-wrap gap-2">
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Python</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Flask</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Supabase</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Cloudflare AI</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">News scraping</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-panel border border-line rounded-3xl p-7">
+                        <p class="font-mono text-xs tracking-[0.2em] uppercase text-moss mb-5">
+                            The pipeline
+                        </p>
+
+                        <div class="space-y-0">
+                            <div class="feature-row py-4 flex gap-4">
+                                <span class="font-mono text-xs text-moss">01</span>
+                                <div>
+                                    <h3 class="text-ivory text-sm font-medium">Collect</h3>
+                                    <p class="text-muted text-sm mt-1 leading-relaxed">
+                                        News articles are scraped and brought into the pipeline as source material.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="feature-row py-4 flex gap-4">
+                                <span class="font-mono text-xs text-moss">02</span>
+                                <div>
+                                    <h3 class="text-ivory text-sm font-medium">Understand</h3>
+                                    <p class="text-muted text-sm mt-1 leading-relaxed">
+                                        Articles are summarized and classified so the resulting content is easier to organize.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="feature-row py-4 flex gap-4">
+                                <span class="font-mono text-xs text-moss">03</span>
+                                <div>
+                                    <h3 class="text-ivory text-sm font-medium">Generate</h3>
+                                    <p class="text-muted text-sm mt-1 leading-relaxed">
+                                        The title and summary are used to generate an article image through an AI image model.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="feature-row py-4 flex gap-4">
+                                <span class="font-mono text-xs text-moss">04</span>
+                                <div>
+                                    <h3 class="text-ivory text-sm font-medium">Publish</h3>
+                                    <p class="text-muted text-sm mt-1 leading-relaxed">
+                                        Structured article data and generated imagery are stored and surfaced through the web application.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal mt-12">
+                    <div class="project-media">
+                        <img src="images/project1.png" alt="Project Newzz interface" />
+                    </div>
+                </div>
+
+                <div class="reveal mt-12 grid md:grid-cols-2 gap-10">
+                    <div>
+                        <p class="font-mono text-xs tracking-[0.2em] uppercase text-moss mb-3">What I built</p>
+                        <p class="text-muted leading-relaxed">
+                            The interesting part of Newzz is not a single page. It is the connection between
+                            the pieces: collection, processing, storage, image generation, and the final reader-facing interface.
+                            The goal was to make that chain work as one system rather than as isolated demos.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p class="font-mono text-xs tracking-[0.2em] uppercase text-moss mb-3">Why it matters</p>
+                        <p class="text-muted leading-relaxed">
+                            It demonstrates practical automation and AI integration: taking an input that changes every day,
+                            processing it programmatically, persisting useful data, and turning that data into something people can browse.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+                    <a href="connect.html" class="btn-primary inline-flex items-center gap-2 bg-moss text-ink font-medium px-6 py-3 rounded-full">
+                        Discuss a similar project <span aria-hidden="true">→</span>
+                    </a>
+                    <a href="#ak-developer" class="tag-pill inline-block border border-line text-ivory px-6 py-3 rounded-full text-sm">
+                        Next project ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PROJECT 2 / AK DEVELOPER ============ -->
+        <section id="ak-developer" class="project-block border-t border-line">
+            <div class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
+
+                <div class="reveal grid lg:grid-cols-[0.95fr_1.05fr] gap-10 lg:gap-16 items-start">
+                    <div class="order-2 lg:order-1">
+                        <div class="project-media">
+                            <img src="images/project2.png" alt="AK Developer real estate site" />
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2">
+                        <p class="font-mono text-xs tracking-[0.25em] uppercase text-moss mb-4">
+                            02 / Real estate
+                        </p>
+
+                        <h2 class="font-display text-4xl md:text-5xl text-ivory leading-tight">
+                            AK Developer
+                        </h2>
+
+                        <p class="text-muted text-lg mt-5 leading-relaxed">
+                            A modern real-estate website designed around property discovery, location context,
+                            and making it easy for an interested visitor to move from browsing to enquiry.
+                        </p>
+
+                        <div class="mt-8 space-y-5">
+                            <div>
+                                <h3 class="text-ivory font-medium">Property discovery</h3>
+                                <p class="text-muted text-sm mt-1 leading-relaxed">
+                                    The site presents properties in a way that keeps the visitor focused on
+                                    what is available rather than overwhelming them with unnecessary interface elements.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-ivory font-medium">Location-led presentation</h3>
+                                <p class="text-muted text-sm mt-1 leading-relaxed">
+                                    Development locations and their surrounding context are part of the experience,
+                                    helping the site communicate more than just a list of properties.
+                                </p>
+                            </div>
+
+                            <div>
+                                <h3 class="text-ivory font-medium">Direct enquiry flow</h3>
+                                <p class="text-muted text-sm mt-1 leading-relaxed">
+                                    The journey is designed to reduce friction between finding an interesting property
+                                    and actually making an enquiry.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="mt-8 flex flex-wrap gap-2">
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Real estate</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Responsive UI</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Property discovery</span>
+                            <span class="border border-line rounded-full px-3 py-1.5 text-xs font-mono text-muted">Enquiry flow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal mt-12 bg-panel border border-line rounded-3xl p-7 md:p-8">
+                    <p class="font-mono text-xs tracking-[0.2em] uppercase text-moss mb-4">
+                        Project focus
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-7">
+                        <div>
+                            <h3 class="font-display text-xl text-ivory">Clarity</h3>
+                            <p class="text-muted text-sm mt-2 leading-relaxed">
+                                Make the important information easy to scan and understand.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl text-ivory">Trust</h3>
+                            <p class="text-muted text-sm mt-2 leading-relaxed">
+                                Present the business and its properties in a professional, credible way.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl text-ivory">Action</h3>
+                            <p class="text-muted text-sm mt-2 leading-relaxed">
+                                Give interested visitors a straightforward path to get in touch.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal mt-10 flex flex-wrap items-center gap-4">
+                    <a href="connect.html" class="btn-primary inline-flex items-center gap-2 bg-moss text-ink font-medium px-6 py-3 rounded-full">
+                        Build a business site <span aria-hidden="true">→</span>
+                    </a>
+                    <a href="#abiraj" class="tag-pill inline-block border border-line text-ivory px-6 py-3 rounded-full text-sm">
+                        Next project ↓
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PROJECT 3 / ABIRAJ ============ -->
+        <section id="abiraj" class="project-block border-t border-line">
+            <div class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
+
+                <div class="reveal grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-start">
+                    <div>
+                        <p class="font-mono text-xs tracking-[0.25em] uppercase text-moss mb-4">
+                            03 / Business website
+                        </p>
+
+                        <h2 class="font-display text-4xl md:text-5xl text-ivory leading-tight">
+                            Abiraj Construction
+                        </h2>
+
+                        <p class="text-muted text-lg mt-5 leading-relaxed">
+                            A clean, credibility-first website for a construction business, built to make
+                            the company's work easy to browse and make it simple for potential customers to enquire.
+                        </p>
+
+                        <div class="mt-8 grid sm:grid-cols-2 gap-5">
+                            <div class="bg-panel border border-line rounded-2xl p-5">
+                                <p class="font-mono text-xs text-moss uppercase tracking-[0.15em]">01</p>
+                                <h3 class="text-ivory font-medium mt-3">Work first</h3>
+                                <p class="text-muted text-sm mt-2 leading-relaxed">
+                                    Showcase completed work and establish credibility quickly.
+                                </p>
+                            </div>
+
+                            <div class="bg-panel border border-line rounded-2xl p-5">
+                                <p class="font-mono text-xs text-moss uppercase tracking-[0.15em]">02</p>
+                                <h3 class="text-ivory font-medium mt-3">Easy browsing</h3>
+                                <p class="text-muted text-sm mt-2 leading-relaxed">
+                                    Keep the experience simple so visitors can understand the business without digging.
+                                </p>
+                            </div>
+
+                            <div class="bg-panel border border-line rounded-2xl p-5">
+                                <p class="font-mono text-xs text-moss uppercase tracking-[0.15em]">03</p>
+                                <h3 class="text-ivory font-medium mt-3">Professional presence</h3>
+                                <p class="text-muted text-sm mt-2 leading-relaxed">
+                                    Give a traditional construction business a polished digital presence.
+                                </p>
+                            </div>
+
+                            <div class="bg-panel border border-line rounded-2xl p-5">
+                                <p class="font-mono text-xs text-moss uppercase tracking-[0.15em]">04</p>
+                                <h3 class="text-ivory font-medium mt-3">Enquiries</h3>
+                                <p class="text-muted text-sm mt-2 leading-relaxed">
+                                    Make it obvious how a visitor can take the next step.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:pt-2">
+                        <div class="project-media">
+                            <img src="images/project3.png" alt="Abiraj Construction site" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal mt-12 border border-line rounded-3xl p-7 md:p-8">
+                    <p class="font-mono text-xs tracking-[0.2em] uppercase text-moss mb-4">
+                        The result
+                    </p>
+                    <p class="text-muted text-base md:text-lg leading-relaxed max-w-3xl">
+                        A focused business site where the work is the main story. Instead of adding complexity,
+                        the design keeps the path from “Who are they?” to “I want to contact them” straightforward.
+                    </p>
+                </div>
+
+                <div class="reveal mt-10">
+                    <a href="connect.html" class="btn-primary inline-flex items-center gap-2 bg-moss text-ink font-medium px-6 py-3 rounded-full">
+                        Start a project <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CTA ============ -->
+        <section class="border-t border-line">
+            <div class="max-w-6xl mx-auto px-6 md:px-10 py-24 md:py-32">
+                <div class="reveal bg-panel border border-line rounded-3xl px-8 py-16 md:py-20 text-center">
+                    <p class="font-mono text-xs tracking-[0.25em] uppercase text-moss mb-4">
+                        Build something real
+                    </p>
+
+                    <h2 class="font-display text-3xl md:text-5xl text-ivory max-w-2xl mx-auto leading-tight">
+                        Have an idea worth shipping?
+                    </h2>
+
+                    <p class="text-muted mt-5 max-w-md mx-auto leading-relaxed">
+                        Tell me what you're trying to build. We can start with the problem,
+                        then figure out the right solution.
+                    </p>
+
+                    <a href="connect.html" class="btn-primary inline-flex items-center gap-2 bg-moss text-ink font-medium px-7 py-3.5 rounded-full mt-8">
+                        Start a conversation <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="border-t border-line">
+        <div class="max-w-6xl mx-auto px-6 md:px-10 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <p class="font-display text-ivory text-lg">
+                Sloth<span class="text-moss">.</span>
+                <span class="text-muted text-sm font-body">— freelance developer portfolio</span>
+            </p>
+
+            <ul class="flex items-center gap-6 text-sm text-muted font-mono">
+                <li><a href="#" class="hover:text-ivory transition-colors">GitHub</a></li>
+                <li><a href="#" class="hover:text-ivory transition-colors">LinkedIn</a></li>
+                <li><a href="#" class="hover:text-ivory transition-colors">LeetCode</a></li>
+            </ul>
+
+            <p class="text-sm text-muted">
+                Find more freelancers at
+                <a
+                    href="https://thinkers.in"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-mossbright hover:underline"
+                >
+                    Thinkers
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.querySelector('.site-nav');
+        const progress = document.getElementById('progress');
+
+        function onScroll() {
+            const scrollY = window.scrollY || window.pageYOffset;
+            nav.classList.toggle('scrolled', scrollY > 40);
+
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const pct = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+            progress.style.width = pct + '%';
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+
+        // Reveal sections as they enter the viewport.
+        const revealEls = document.querySelectorAll('.reveal');
+
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        revealEls.forEach((el, index) => {
+            el.style.transitionDelay = `${Math.min(index * 0.04, 0.24)}s`;
+            io.observe(el);
+        });
+
+        // Small click feedback for internal jump links.
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', () => {
+                link.style.transform = 'translateY(-1px) scale(0.98)';
+                setTimeout(() => {
+                    link.style.transform = '';
+                }, 160);
+            });
+        });
+    </script>
+
+</body>
+</html>
